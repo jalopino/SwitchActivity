@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+
+
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,20 +19,27 @@ public class MainActivity extends AppCompatActivity {
         EditText text = (EditText)findViewById(R.id.number);
         btn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String number =  text.getText().toString();
-                int value = Integer.parseInt(number);
-                switch(checkNum(value)){
+                long globalValue = getNum(text.getText().toString());
+                switch(checkNum(globalValue)){
                     case 1:
-                        startActivity(new Intent(MainActivity.this, EvenActivity.class));
+                        Intent even = new Intent(MainActivity.this, EvenActivity.class);
+                        even.putExtra("even", text.getText().toString());
+                        startActivity(even);
                         break;
                     case 2:
-                        startActivity(new Intent(MainActivity.this, OddActivity.class));
+                        Intent odd = new Intent(MainActivity.this, OddActivity.class);
+                        odd.putExtra("odd", text.getText().toString());
+                        startActivity(odd);
                         break;
                 }
             }
         });
     }
-    public int checkNum(int num) {
+    public long getNum(String number) {
+        long value = Long.parseLong(number);
+        return value;
+    }
+    public int checkNum(long num) {
         if (num % 2 == 0) {
             return 1;
         } else
